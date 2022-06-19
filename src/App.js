@@ -6,9 +6,11 @@ import Home from "./components/Home";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { dataActions } from "./store/dataSlice";
+import AddCourse from "./components/user/courses/AddCourse";
+import CoursesDetails from "./components/user/courses/CoursesDetails";
 
 function App() {
-  const admin = useSelector(state => state.admin)
+  const admin = useSelector(state => state.data.admin)
   const dispatch = useDispatch()
   useEffect(
     () => {
@@ -20,7 +22,7 @@ function App() {
         for (const key in data) {
 
           userdata.push({
-            id: data[key].id,
+            id:key,
             firstName: data[key].firstNameValue,
             lastName: data[key].lastNameValue,
             email: data[key].emailValue,
@@ -43,7 +45,7 @@ function App() {
         for (const key in data) {
 
           admindata.push({
-            id: data[key].id,
+            id: key,
             firstName: data[key].firstNameValue,
             lastName: data[key].lastNameValue,
             email: data[key].emailValue,
@@ -67,11 +69,14 @@ function App() {
     <div className="App" >
       <Home>
 
+          <AddCourse/>
         <Routes>
           {/* <Route exact path='/' element={<Home />} /> */}
           <Route path='/signup' element={<Form />} />
           <Route path='/data' element={<DisplayData />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/courses' element={<CoursesDetails />} />
+          <Route path='/add-course' element={<AddCourse />} />
         </Routes>
       </Home>
     </div>
