@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const courseSlice = createSlice(
+const coursesSlice = createSlice(
     {
         name: 'courses',
         initialState: { courses: []},
         reducers: {
             storecourses(state, action) {
-                const newitem = action.payload;
+                console.log('course name is', action.payload);
                 state.courses = [...state.courses, action.payload]
             },
 
@@ -16,5 +16,5 @@ const courseSlice = createSlice(
     }
 )
 
-export const coursesActions = courseSlice.actions
-export default courseSlice
+export const coursesActions = coursesSlice.actions
+export default coursesSlice

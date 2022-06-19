@@ -8,16 +8,16 @@ const dataSlice = createSlice(
             storeData(state, action) {
                 const newitem = action.payload;
                 state.data = [newitem]
-                console.log('user', state.data[0]);
+                // console.log('user', state.data[0]);
             },
             storeAdmin(state, action) {
                 const newitem = action.payload;
                 state.admin = [newitem]
-                console.log('admin', state.admin[0]);
+                // console.log('admin', state.admin[0]);
             },
             setAdmin(state ,action) {
                 state.isAdmin = action.payload;
-                console.log(state.isAdmin);
+                // console.log(state.isAdmin);
             },
             loginHandler(state) {
                 state.isLoggedIn = true

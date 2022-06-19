@@ -10,10 +10,9 @@ const Form = () => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch();
-    let Incomingdata = useSelector((state) => state.data)
-    let adminData = useSelector((state) => state.admin)
-    let adminIsAvailable = useSelector((state) => state.isAdmin)
-    const [id, setId] = useState(Incomingdata.length + 1)
+    let Incomingdata = useSelector((state) => state.data.data)
+    let adminData = useSelector((state) => state.data.admin)
+    let adminIsAvailable = useSelector((state) => state.data.isAdmin)
     const [alreadyExist, setAlreadyExist] = useState(false)
     const [isSwitchedToAdmin, setIsSwitchedtoAdmin] = useState(false)
     //first name
@@ -77,7 +76,6 @@ const Form = () => {
     const formSubmitter = (e) => {
         // debugger
         e.preventDefault();
-        setId(id + 1)
 
 
 
@@ -92,8 +90,7 @@ const Form = () => {
             data = Incomingdata[0]
         }
 
-
-        console.log(data);
+        let id = ''
         const authUser = async () => {
             if (!data.find(obj => obj.email === emailValue)) {
                 console.log('alreadyExist');

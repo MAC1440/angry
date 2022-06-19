@@ -7,13 +7,13 @@ import DisplayData from './DisplayData'
 
 
 const Login = () => {
-    let Incomingdata = useSelector((state) => state.data)
-    let adminData = useSelector((state) => state.admin)
+    let Incomingdata = useSelector((state) => state.data.data)
+    let adminData = useSelector((state) => state.data.admin)
     const [isAdmin, setIsAdmin] = useState(true)
+    const [error, setError] = useState(null)
     const dispatch = useDispatch()
     const [matchedData, setMatchedData] = useState()
     const navigate = useNavigate()
-
 
 
     let url;
@@ -38,7 +38,7 @@ const Login = () => {
                 for (const key in data) {
 
                     userdata.push({
-                        id: data[key].id,
+                        id: key,
                         firstName: data[key].firstNameValue,
                         lastName: data[key].lastNameValue,
                         email: data[key].emailValue,
@@ -46,11 +46,11 @@ const Login = () => {
                         confirmPassword: data[key].confirmPasswordValue,
                     })
                 }
-                console.log('use Effect of userData ', reduxData);
+                console.log('use Effect of ', isAdmin ? 'Admin' : 'User', reduxData);
                 isAdmin ? dispatch(dataActions.storeAdmin(userdata)) : dispatch(dataActions.storeData(userdata))
             }
             getData()
-        }, [])
+        }, [isAdmin, dispatch, url])
 
 
     //first name
@@ -84,15 +84,17 @@ const Login = () => {
             let user = reduxData.find(obj => obj.email === userName)
             setMatchedData(user)
             dispatch(dataActions.loginHandler())
+            // navigate('/data')
+            userNameReset()
+            passwordReset()
+            setError(null)
         }
         else {
+            setError('Email or password Does not match')
             console.log('no match');
         }
 
-        userNameReset()
-        passwordReset()
         // loginUser()
-        navigate('/data')
     }
     const toggleAdmin = () => { setIsAdmin(!isAdmin) }
     // console.log('data matched is', matchedData);
@@ -119,11 +121,13 @@ const Login = () => {
                     {passwordHasError && <p className='error-text'>password should not be empty </p>}
                 </div>
                 <button type='submit' disabled={!formIsValid} >Submit</button>
+                <p className='error-text'>{error}</p>
             </div>
         </form>
         <button type='button' onClick={toggleAdmin}> Switch to {isAdmin ? 'User ' : 'Admin '} Login </button>
-        {matchedData && <p> Welcome Back {matchedData.firstName} {matchedData.lastName} </p>}
-        {matchedData && <DisplayData name={matchedData.firstName} />}
+        {matchedData && <p> Welcome Back {matchedData.firstName} {matchedData.lastName}  with the key of {matchedData.id}</p>}
+
+        {/* <DisplayData name={matchedData.firstName} /> */}
     </>
     )
 }
